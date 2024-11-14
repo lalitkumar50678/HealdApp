@@ -1,0 +1,8 @@
+{
+  "extends": "@react-native/typescript-config/tsconfig.json",
+  "compilerOptions": {
+    "strict": true, // Enables all strict type-checking options
+    "strictNullChecks": false, // Example: disables strict null checks specifically
+    "skipLibCheck": true
+  }
+}
