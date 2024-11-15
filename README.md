@@ -7,7 +7,7 @@
 
 
 I'm Lalit kumar. In this repo i'm repseting the demo application 
-develop for Heald. This application use tp track user physical activity. Like how much steps they counted for a day. According to the hours we show the graph at the bottom. 
+develop for Heald App. This application use t0 track user physical activity. Like:  steps count, distance travel and calories burn.
 
 Here i'm adding image for video for more refernce 
 
@@ -18,7 +18,9 @@ Here i'm adding image for video for more refernce
 
 In this application i implement all features and functionality as the the requirement doc. like get the steps count from the accelometer, track the location from GPS and other. 
 In use few help libraries to achived this all features like 
-react-native-community/geolocation (to get the GPS data), @dongminyu/react-native-step-counter (to calculate the stesp count in application) and as per the main requirement the application run on background as well so i use react-native-background-actions library it's run different service in app. Performce the background task.
+ 1. react-native-community/geolocation (to get the GPS data).
+ 2. @dongminyu/react-native-step-counter (to calculate the stesp count in application).
+ 3. react-native-background-actions, The main requirement to run application in background as well so i use  library it's run different service in app. Performce the background task.
 
 I also the graph library to implemnt the graph functionlaity. 
 
@@ -28,7 +30,6 @@ I also the graph library to implemnt the graph functionlaity.
  2. Implement all main feature and bonus feature like background taks, best coding pratices
  3. Use custom hooks and memorization as per requirement to improve the application overall performance 
   
-
 
 ## Open issue
 
