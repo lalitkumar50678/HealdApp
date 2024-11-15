@@ -12,7 +12,7 @@ develop for Heald. This application use tp track user physical activity. Like ho
 Here i'm adding image for video for more refernce 
 
 <!-- ![Logo](images/Demo_app_img.jpg) -->
-<img src="images/Demo_app_img.jpg" alt="Demo Image" width="200" height="400">
+<img src="images/Demo_app_img.jpg" alt="Demo Image" width="250" height="550">
 
 ## Step 2: Start your Application
 
