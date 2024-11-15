@@ -11,65 +11,27 @@ develop for Heald. This application use tp track user physical activity. Like ho
 
 Here i'm adding image for video for more refernce 
 
-<!-- ![Logo](images/Demo_app_img.jpg) -->
+# Image
 <img src="images/Demo_app_img.jpg" alt="Demo Image" width="250" height="550">
 
-## Step 2: Start your Application
+## Heald Demo App
 
-Let Metro Bundler run in its _own_ terminal. Open a _new_ terminal from the _root_ of your React Native project. Run the following command to start your _Android_ or _iOS_ app:
+In this application i implement all features and functionality as the the requirement doc. like get the steps count from the accelometer, track the location from GPS and other. 
+In use few help libraries to achived this all features like 
+react-native-community/geolocation (to get the GPS data), @dongminyu/react-native-step-counter (to calculate the stesp count in application) and as per the main requirement the application run on background as well so i use react-native-background-actions library it's run different service in app. Performce the background task.
 
-### For Android
+I also the graph library to implemnt the graph functionlaity. 
 
-```bash
-# using npm
-npm run android
+### These things which specially 
 
-# OR using Yarn
-yarn android
-```
+ 1. Use MvvM coding architecture.
+ 2. Implement all main feature and bonus feature like background taks, best coding pratices
+ 3. Use custom hooks and memorization as per requirement to improve the application overall performance 
+  
 
-### For iOS
 
-```bash
-# using npm
-npm run ios
+## Open issue
 
-# OR using Yarn
-yarn ios
-```
-
-If everything is set up _correctly_, you should see your new app running in your _Android Emulator_ or _iOS Simulator_ shortly provided you have set up your emulator/simulator correctly.
-
-This is one way to run your app — you can also run it directly from within Android Studio and Xcode respectively.
-
-## Step 3: Modifying your App
-
-Now that you have successfully run the app, let's modify it.
-
-1. Open `App.tsx` in your text editor of choice and edit some lines.
-2. For **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Developer Menu** (<kbd>Ctrl</kbd> + <kbd>M</kbd> (on Window and Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (on macOS)) to see your changes!
-
-   For **iOS**: Hit <kbd>Cmd ⌘</kbd> + <kbd>R</kbd> in your iOS Simulator to reload the app and see your changes!
-
-## Congratulations! :tada:
-
-You've successfully run and modified your React Native App. :partying_face:
-
-### Now what?
-
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [Introduction to React Native](https://reactnative.dev/docs/getting-started).
-
-# Troubleshooting
-
-If you can't get this to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+Note: There is few open issue in the application 
+1. Distance update randomly. It's  relate to the previoius distance + new distance calcualtation 
+2. Calories, Not get update. I found it in object still few calculation is missing in this part.   
