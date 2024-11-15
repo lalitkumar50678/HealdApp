@@ -9,7 +9,14 @@ import styles from './styles';
 const Text: React.FC<CustomTextProps>=({children, type,style})=>{
 
     const textStyle = useMemo(() => {
-        return type === TextType.primary ? styles.primaryText : styles.secondaryText;
+        switch(type){
+            case TextType.primary:
+                return styles.primaryText;
+            case TextType.main:
+                return styles.mainTxt
+            case TextType.secondary:
+                return styles.secondaryText;
+        }
       }, [type]);
     
     return (

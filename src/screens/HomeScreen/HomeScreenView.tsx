@@ -7,30 +7,34 @@ import ToolBar from "../../components/molecules/ToolBar/ToolBar";
 import { LocalizationEN } from "../../i18n";
 import { HomeScreenViewProps } from "./types";
 import { TextType } from "../../components/atoms/Text/Types";
-import { Colors } from "../../utils";
+import { Colors, generateShadow } from "../../utils";
+import StepsView  from '../../components/molecules/StepsView/StepsView';
+import {TOTAL_TARGET_STEPS} from '../../constants';
+import CaloriesView from "../../components/molecules/CaloriesView/CaloriesView";
+import StepsGraphView from '../../components/molecules/StepsGraphView/StepsGraphView';
 
-const HomeScreenView: React.FC<HomeScreenViewProps> = ({ steps }) => {
+const HomeScreenView: React.FC<HomeScreenViewProps> = ({ steps,isPlaying,onStartStop,fill,distanceTravel,list }) => {
   return (
     <View style={styles.container}>
       <ToolBar title={LocalizationEN.HOME} />
+      <View style={[styles.stepsViewStyle,generateShadow()]}>
       <View style={styles.circluarStyle}>
         <CircularProgressBar
-          fill={40}
+          fill={fill}
           tintColor={Colors.CIRCULAR_FILL}
           backgroundColor={Colors.CIRCULAR_UNFILL}
           width={25}
         >
           {(fill) => (
-            <View style={{ flex: 1, backgroundColor: "red" }}>
-              <Text type={TextType.primary}>{LocalizationEN.STEPS}</Text>
-              <Text>{fill}</Text>
-              
-            </View>
+            <StepsView stepsCount={steps} targetStepsCount={TOTAL_TARGET_STEPS}  isPlaying={isPlaying} onStartStop={onStartStop} />
           )}
         </CircularProgressBar>
 
         <Text>{steps}</Text>
       </View>
+      </View>
+      <CaloriesView  calories={10} distance={parseFloat(distanceTravel.toFixed(2)) } />
+      <StepsGraphView list={list} /> 
     </View>
   );
 };

@@ -28,7 +28,7 @@ const CircularProgressBar: React.FC<CircularProgressBarProps> = ({
       backgroundColor={backgroundColor}
       arcSweepAngle={arcSweepAngle}
       rotation={rotation}
-      renderCap={({ center }) => <Circle cx={center.x} cy={center.y} r="10" fill="blue" />}
+      renderCap={({ center }) => <Circle cx={center.x} cy={center.y} r="15" fill={Colors.CIRCULAR_FILL} />}
     >
     {children}
     </AnimatedCircularProgress>
