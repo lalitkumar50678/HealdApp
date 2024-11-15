@@ -22,6 +22,3 @@ export type LocalStarage = {
     time: string;
     date: string;
 }
-
-export type LocalDataWithTime = Record<string,LocalStarage>;
-export type LocalDataWithDate = Record<string, LocalDataWithTime>

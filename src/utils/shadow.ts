@@ -12,7 +12,12 @@ export type ShadowProps ={
       height: number;
     };
   }
-
+/**
+ * Method use to generate the 
+ * shadow
+ * @param param0 
+ * @returns Shadow style
+ */
 export const generateShadow = ({
   elevation = 5,
   shadowColor = Colors.BLACK,

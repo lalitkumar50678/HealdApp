@@ -11,6 +11,7 @@ const LocalizationEN = {
     GO_TO_SETTING: 'Go To Settings',
     KM: 'Km',
     CALORIES:'Calories',
+    PLEASE_ENABLE_LOCATION: 'Please enable location services.',
 }
 
 export default LocalizationEN;

@@ -10,7 +10,6 @@ const StepsGraphView: React.FC<StepsGraphViewProps> = ({ list }) => {
     value: item.stepsCount,
     label: item.time,
   }));
-  console.log('barData -> ',barData);
   if (barData.length > 0) {
     return (
       <View style={[styles.container, generateShadow()]}>

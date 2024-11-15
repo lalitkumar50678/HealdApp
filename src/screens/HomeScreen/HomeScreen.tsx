@@ -7,15 +7,12 @@ const HomeScreen: React.FC = () => {
   const [isCount, setCount] = useState(false);
   const {
     steps,
-    askPermission,
-    isStepCountingSupported,
     startStepCounter,
     stopStepCounterUpdate,
     distanceTravelled,
     dataList,
   } = useAccelometer();
 
-  console.log("dataList ---> ", dataList);
 
   const fillPrece=  useMemo(()=>{
     return (steps/TOTAL_TARGET_STEPS)*100;

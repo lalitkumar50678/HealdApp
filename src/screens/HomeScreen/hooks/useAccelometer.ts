@@ -1,6 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-import { accelerometer } from "react-native-sensors";
-import { filter, map } from "rxjs/operators";
 import {
   isStepCountingSupported,
   parseStepData,
@@ -34,10 +32,7 @@ const useAccelometer = () => {
   useEffect(() => {
     (async () => {
       const mLocalStarage = await getStorageData();
-      console.log("mLocalStarage -> ", mLocalStarage);
-      
       const todatDate = moment(new Date()).format(DATE_FORMAT);
-      console.log("todatDate -> ", todatDate);
       const intialCountList = mLocalStarage.filter(
         (item) => item.date === todatDate
       );
@@ -46,12 +41,16 @@ const useAccelometer = () => {
         (acc, num) => acc + num.stepsCount,
         0
       );
-      console.log("intialCount -> ", stepsconut);
       setPreviousStepsCount(stepsconut);
     })();
   }, []);
 
-  const requestCameraPermission = async () => {
+  /**
+   * Check used to check the 
+   * Location permission
+   * @returns 
+   */
+  const requestLocationPermission = async () => {
     try {
       const granted = await PermissionsAndroid.request(
         PermissionsAndroid.PERMISSIONS.ACCESS_COARSE_LOCATION,
@@ -76,20 +75,17 @@ const useAccelometer = () => {
     }
   };
 
-  const askPermission = async () => {
-    isStepCountingSupported().then((result) => {
-      console.debug("🚀 - isStepCountingSupported", result);
-      setGranted(result.granted === true);
-      setSupported(result.supported === true);
-    });
-  };
+ 
 
   useEffect(() => {
-    console.log("location is updates -> ", location);
     locationRef.current = location;
     distanceRef.current = distanceTravelled;
   }, [location, distanceTravelled]);
 
+  /**
+   * Get the location continuely 
+   * @returns 
+   */
   const getLocation = (): Promise<Location | null> => {
     Geolocation.setRNConfiguration({
       enableBackgroundLocationUpdates: true,
@@ -100,7 +96,6 @@ const useAccelometer = () => {
     return new Promise((resolve) => {
       Geolocation.watchPosition(
         (position) => {
-          //console.log("geo locaiton : ", position.coords);
           const { latitude, longitude } = position.coords;
           const newLocation: Location = { latitude, longitude };
           resolve(newLocation);
@@ -113,38 +108,39 @@ const useAccelometer = () => {
           enableHighAccuracy: true,
           distanceFilter: 1,
           interval: 10000,
-          //distanFilter: 1,
         }
       );
     });
   };
-
+  /**
+   * List manipulation to 
+   * storage the list into the async storage
+   * @param calories 
+   * @param steps 
+   * @param distance 
+   */
   const stroagePreration = async (
     calories: number,
     steps: number,
     distance: number
   ) => {
-    //console.log('stroageData calling -> ',calories,  ' steps ',steps);
     const listLocationData = (await getStorageData()) || [];
     
     const currentTime = moment(new Date()).format(TIME_FORMAT);
     const currentDate = moment(new Date()).format(DATE_FORMAT);
-    console.log("distanceTravelled calling -> ", currentTime);
     const data: LocalStarage = {
       calories: calories,
       distanceTravel: distance,
       stepsCount: steps,
       time: currentTime,
       date: currentDate,
-    };
-    console.log("distanceTravel -> ", data.distanceTravel, distanceTravelled);
+    }; 
     const list = manipulationInList(
       listLocationData,
       currentTime,
       currentDate,
       data
     );
-    console.log("list -> ", list);
     await storageData(list);
   };
 
@@ -159,7 +155,6 @@ const useAccelometer = () => {
         (item) => item.date && currentDate && item.time && currentTime
       );
       if (filtered.length > 0) {
-        console.log("data.distanceTravel 0-> ", data.distanceTravel, filtered);
         return filtered.map((item) => ({
           date: currentDate,
           time: currentTime,
@@ -168,12 +163,10 @@ const useAccelometer = () => {
           stepsCount: item.stepsCount + data.stepsCount,
         }));
       } else {
-        console.log("data.distanceTravel 1-> ", data.distanceTravel, filtered);
         listLocationData.push(createNewDataList(currentTime, currentDate, data)) ;
         return listLocationData;
       }
-    } else {
-      console.log("data.distanceTravel 2-> ", data.distanceTravel);
+    } else { 
       listLocationData.push(createNewDataList(currentTime, currentDate, data)) ;
       return listLocationData;
     }
@@ -209,28 +202,20 @@ const useAccelometer = () => {
   };
 
   const startStepCounter = async () => {
-    console.log("startStepCounter calling --->");
-    const pemissionGraned = await requestCameraPermission();
+    const pemissionGraned = await requestLocationPermission();
     const locationEnabled = await checkIfLocationEnabled();
     if (!locationEnabled) {
-      Alert.alert("", "Please enable location services.", [
+      Alert.alert("", LocalizationEN.PLEASE_ENABLE_LOCATION, [
         {
-          text: "ok",
+          text: LocalizationEN.OK,
         },
         {
-          text: "cancel",
+          text: LocalizationEN.CANCEL,
         },
       ]);
       return;
     }
-    console.log(
-      "pemissionGraned -> ",
-      pemissionGraned,
-      " locationEnabled ->  ",
-      locationEnabled
-    );
     if (pemissionGraned) {
-      console.log("startStepCounterUpdate calling 1 ", location);
       await  startBackgroundServiceTask();
     } else {
       Alert.alert("", LocalizationEN.ALLOW_LOCATION, [
@@ -248,7 +233,10 @@ const useAccelometer = () => {
     await BackgroundService.stop();
     stopStepCounterUpdate();
   };
-
+  /**
+   * Method used to Start the background service's
+   * in android and iOS both 
+   */
   const startBackgroundServiceTask = async () => {
     await BackgroundService.start(async() => {
       startStepCounterUpdate(new Date(), async (data) => {
@@ -256,17 +244,12 @@ const useAccelometer = () => {
         setSteps(data.steps);
 
         const loc = await getLocation();
-        console.log("loc -> ", loc, " update -> ", locationRef.current);
         if (loc) {
           if (locationRef.current) {
             const distance = calculateDistance(locationRef.current, loc);
-            setDistanceTravelled((prevDistance) => prevDistance + distance);
+            setDistanceTravelled(distance);
           }
           setLocation(loc);
-          console.log(
-            "stroagePreration ---> distance -> ",
-            distanceRef.current
-          );
           stroagePreration(calories, data.steps, distanceRef.current);
         }
 
@@ -277,7 +260,6 @@ const useAccelometer = () => {
 
   return {
     steps: steps + previousStepsCount,
-    askPermission,
     isStepCountingSupported,
     startStepCounter,
     stopStepCounterUpdate: stopBackgroundTask,
